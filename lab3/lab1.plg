@@ -6,29 +6,47 @@
 --------------------Configuration: lab1 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\10743\AppData\Local\Temp\RSP82D9.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/lab1.res" /d "_DEBUG" /d "_AFXDLL" "E:\大三下\RFID\rfid-lab\lab3\lab1.rc"" 
+Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPB70B.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/lab1.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Users\10743\Desktop\lab3\lab3\Debugger.cpp"
+"E:\大三下\RFID\rfid-lab\lab3\AppDev.cpp"
+"E:\大三下\RFID\rfid-lab\lab3\Debugger.cpp"
+"E:\大三下\RFID\rfid-lab\lab3\lab1.cpp"
+"E:\大三下\RFID\rfid-lab\lab3\lab1Dlg.cpp"
 ]
-Creating command line "cl.exe @C:\Users\10743\AppData\Local\Temp\RSP82D9.tmp" 
-Creating temporary file "C:\Users\10743\AppData\Local\Temp\RSP82DA.tmp" with contents
+Creating command line "cl.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPB70B.tmp" 
+Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPB70C.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/lab1.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\大三下\RFID\rfid-lab\lab3\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPB70C.tmp" 
+Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPB70D.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /debug /machine:I386 /out:"Debug/lab1.exe" /pdbtype:sept /libpath:"./libs" 
-.\Debug\AppDev.obj
-.\Debug\Debugger.obj
-.\Debug\lab1.obj
-.\Debug\lab1Dlg.obj
-.\Debug\StdAfx.obj
-.\Debug\lab1.res
+".\Debug\AppDev.obj"
+".\Debug\Debugger.obj"
+".\Debug\lab1.obj"
+".\Debug\lab1Dlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\lab1.res"
 ]
-Creating command line "link.exe @C:\Users\10743\AppData\Local\Temp\RSP82DA.tmp"
+Creating command line "link.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPB70D.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+AppDev.cpp
 Debugger.cpp
-C:\Users\10743\Desktop\lab3\lab3\Debugger.cpp(107) : warning C4101: 'des_data' : unreferenced local variable
+E:\大三下\RFID\rfid-lab\lab3\Debugger.cpp(107) : warning C4101: 'des_data' : unreferenced local variable
+lab1.cpp
+lab1Dlg.cpp
+Generating Code...
 Linking...
-Creating command line "bscmake.exe /nologo /o"Debug/lab1.bsc"  .\Debug\StdAfx.sbr .\Debug\AppDev.sbr .\Debug\Debugger.sbr .\Debug\lab1.sbr .\Debug\lab1Dlg.sbr"
+LINK : LNK6004: Debug/lab1.exe not found or not built by the last incremental link; performing full link
+Creating command line "bscmake.exe /nologo /o"Debug/lab1.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\AppDev.sbr" ".\Debug\Debugger.sbr" ".\Debug\lab1.sbr" ".\Debug\lab1Dlg.sbr""
 Creating browse info file...
 <h3>Output Window</h3>
 
