@@ -90,7 +90,7 @@ void CDebugger::OnButton2()
 	}
 }
 
-#define page 0
+#define page 11
 #define block 0
 
 void CDebugger::OnInit()
