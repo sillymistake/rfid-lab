@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CDebugger
+LastClass=CAppDev
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "lab1.h"
@@ -13,11 +13,11 @@ Class2=CLab1Dlg
 Class3=CAboutDlg
 
 ResourceCount=5
-Resource1=IDD_APPDEV
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_LAB1_DIALOG
+Resource3=IDD_APPDEV
 Class4=CAppDev
-Resource4=IDD_ABOUTBOX
+Resource4=IDD_LAB1_DIALOG
 Class5=CDebugger
 Resource5=IDD_DEBUGGER
 
@@ -63,7 +63,7 @@ HeaderFile=AppDev.h
 ImplementationFile=AppDev.cpp
 BaseClass=CDialog
 Filter=D
-LastObject=IDC_block3a
+LastObject=IDC_block0
 VirtualFilter=dWC
 
 [CLS:CDebugger]

@@ -236,7 +236,6 @@ void CAppDev::OnWriteblock()
 	CString block_s;
 	CString pwd;
 
-	clearView();
 	
 	m_pwd.GetWindowText(pwd);
 	if(pwdtype != 0x0A && pwdtype != 0x0B) {
@@ -269,7 +268,8 @@ void CAppDev::OnWriteblock()
 	int* des_len = new int;
 	int state;
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
-    state = read_block(block,page,pwdtype,pwd_c,des_data,des_len);
+    //state = read_block(page,block,pwdtype,pwd_c,des_data,des_len);
+	state = 0;
 	CString str_;
 	str_.Format("%d",state);
 	m_block3a.SetWindowText(str_);
@@ -295,10 +295,15 @@ void CAppDev::OnWriteblock()
 			}
 			unsigned char* data_c = cstring_to_unsignedchar(data);
 			int data_c_length = data.GetLength()/2;
-			state = write_block(block,page,pwdtype,pwd_c,data_c,data_c_length);
+
+
+			state = write_block(page,block,pwdtype,pwd_c,data_c,data_c_length);
 			if(!state){
 				//对话框显示写块成功
 				MessageBox("写块成功");
+			}else{
+				CString s = "写块失败!3"+state; 
+				MessageBox(s);
 			}
 
 		} else {
@@ -319,10 +324,13 @@ void CAppDev::OnWriteblock()
 				}
 				unsigned char* data_c = cstring_to_unsignedchar(data);
 				int data_c_length = data.GetLength()/2;
-				state = write_block(block,page,pwdtype,pwd_c,data_c,data_c_length);
+				state = write_block(page,block,pwdtype,pwd_c,data_c,data_c_length);
 				if(!state){
 					//对话框显示写块成功
 					MessageBox("写块成功");
+				}else{
+					CString s = "写块失败!2"+state; 
+					MessageBox(s);
 				}
 			}
 			if(block == 1) {
@@ -336,10 +344,13 @@ void CAppDev::OnWriteblock()
 				}
 				unsigned char* data_c = cstring_to_unsignedchar(data);
 				int data_c_length = data.GetLength()/2;
-				state = write_block(block,page,pwdtype,pwd_c,data_c,data_c_length);
+				state = write_block(page,block,pwdtype,pwd_c,data_c,data_c_length);
 				if(!state){
 					//对话框显示写块成功
 					MessageBox("写块成功");
+				}else{
+					CString s = "写块失败!1"+state; 
+					MessageBox(s);
 				}
 			}
 			if(block == 0) {
@@ -356,7 +367,13 @@ void CAppDev::OnWriteblock()
 				state = write_block(block,page,pwdtype,pwd_c,data_c,data_c_length);
 				if(!state){
 					//对话框显示写块成功
-					MessageBox("写块成功");
+					MessageBox("写块成功0");
+				}else{
+					CString str_;
+					str_.Format("%d",state);
+					m_block3a.SetWindowText(str_);
+					CString s = "写块失败!0"+state; 
+					MessageBox(s);
 				}
 			}
 		}
