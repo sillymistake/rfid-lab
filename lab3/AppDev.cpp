@@ -280,7 +280,7 @@ void CAppDev::OnWriteblock()
 				CString s1;
 				s1.Format("%02x", des_data[k]);
 				//str += s1;
-				if(k<5) msrc_data0+=s1;
+				if(k<6) msrc_data0+=s1;
 				else if(k<10) src_data1+=s1;
 				else src_data2+=s1;
 			}
