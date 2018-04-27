@@ -291,7 +291,7 @@ void CAppDev::OnWriteblock()
 			}
 			CString data = src_data0 + src_data1 + src_data2;
 			if(data.GetLength()%2!=0){
-				data.Insert(data.GetLength(),"0");
+				data.Insert(0,"0");
 			}
 			unsigned char* data_c = cstring_to_unsignedchar(data);
 			int data_c_length = data.GetLength()/2;
