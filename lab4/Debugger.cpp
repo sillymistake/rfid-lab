@@ -20,6 +20,7 @@ static char THIS_FILE[] = __FILE__;
 CDebugger::CDebugger(CWnd* pParent /*=NULL*/)
 	: CDialog(CDebugger::IDD, pParent)
 {
+	DeleteFile("record.txt");
 	//{{AFX_DATA_INIT(CDebugger)
 	//}}AFX_DATA_INIT
 }
@@ -110,6 +111,8 @@ void CDebugger::OnInit()
 	unsigned char des_data[1024];
 	int* des_len = new int;
 	int state;
+	CString rec = "初始金额: ";
+	rec = rec + balance;
 	unsigned char pwdtype = 0x0B;
 	CString pwd="FFFFFFFFFFFF";
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
@@ -118,6 +121,8 @@ void CDebugger::OnInit()
 	if(!state){
 		//弹出对话框显示写入成功
 		MessageBox("钱包初始化成功");
+		writeRecord(rec);
+		OnQueryRecord();
 		return;
 	}
 	//弹出状态码state
@@ -153,7 +158,9 @@ void CDebugger::OnRecharge()
 {
 	// TODO: Add your control notification handler code here
 	CString recharge_s;
+	CString rec = "充值金额: ";
 	m_recharge.GetWindowText(recharge_s);
+	rec = rec + recharge_s;
 	if(recharge_s.IsEmpty()){
 		//弹出对话框显示错误
 		MessageBox("请输入充值金额");
@@ -171,6 +178,8 @@ void CDebugger::OnRecharge()
 		state = write_account(page, block, pwdtype, pwd_c, sum);
 		if(!state) {
 			MessageBox("充值成功!");
+			writeRecord(rec);
+			OnQueryRecord();
 			return;
 		}
 		//弹出状态码state
@@ -189,7 +198,9 @@ void CDebugger::OnConsume()
 {
 	// TODO: Add your control notification handler code here
 	CString consume_s;
+	CString rec = "扣取金额: ";
 	m_consume.GetWindowText(consume_s);
+	rec = rec + consume_s;
 	if(consume_s.IsEmpty()){
 		//弹出对话框显示错误
 		MessageBox("请输入扣取金额");
@@ -211,6 +222,8 @@ void CDebugger::OnConsume()
 		state = write_account(page, block, pwdtype, pwd_c, result);
 		if(!state) {
 			MessageBox("扣费成功!");
+			writeRecord(rec);
+			OnQueryRecord();
 			return;
 		}
 		//弹出状态码state
@@ -268,7 +281,13 @@ void CDebugger::clearView()//清除界面显示的数据
 	m_state.SetWindowText("");
 }
 
-
+void CDebugger::writeRecord(CString str) {
+	str = str + "\r\n";
+	CFile file("record.txt", CFile::modeCreate | CFile::modeReadWrite | CFile::modeNoTruncate);
+	file.SeekToEnd();
+	file.Write(str, str.GetLength());
+	file.Close();
+}
 
 
 void CDebugger::OnClearRecord() 
@@ -295,3 +314,5 @@ void CDebugger::OnQueryRecord()
 	}
 	file.Close();
 }
+
+

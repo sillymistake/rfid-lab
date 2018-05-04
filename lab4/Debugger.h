@@ -18,6 +18,7 @@ public:
 	unsigned char* cstring_to_unsignedchar(CString s);
 	void clearView();
 	long cstring_to_long(CString s);
+	void writeRecord(CString s);
 
 // Dialog Data
 	//{{AFX_DATA(CDebugger)
