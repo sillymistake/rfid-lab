@@ -13,11 +13,11 @@ Class2=CLab1Dlg
 Class3=CAboutDlg
 
 ResourceCount=5
-Resource1=IDD_LAB1_DIALOG
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
+Resource3=IDD_APPDEV
 Class4=CAppDev
-Resource4=IDD_APPDEV
+Resource4=IDD_LAB1_DIALOG
 Class5=CDebugger
 Resource5=IDD_DEBUGGER
 
@@ -119,8 +119,8 @@ Control8=IDC_STATIC4,button,1342177287
 Control9=IDC_STATIC,static,1342308352
 Control10=IDC_STATIC,static,1342308352
 Control11=IDC_STATIC,static,1342308352
-Control12=IDC_PAGE,combobox,1344340226
-Control13=IDC_BLOCK,combobox,1344340226
+Control12=IDC_PAGE,combobox,1344339970
+Control13=IDC_BLOCK,combobox,1344339970
 Control14=IDC_BALANCE,edit,1350631552
 Control15=IDC_BUTTON1,button,1342242816
 Control16=IDC_BUTTON4,button,1342242816
