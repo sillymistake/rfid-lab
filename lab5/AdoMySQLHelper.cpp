@@ -221,7 +221,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 				//方式一
 				if(flag){
 					if((m_pRecordset!=NULL) && (m_pRecordset->State)){
-						m_pRecordset->Close(); //关闭连接
+						//m_pRecordset->Close(); //关闭连接
 						m_pRecordset.Release();//释放连接
 						m_pRecordset=NULL;
 					}
@@ -252,7 +252,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 			} // end of while(!m_pRecordset->ADOEOF)
 
 
-			m_pRecordset->Close(); //关闭连接
+			//m_pRecordset->Close(); //关闭连接
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 
@@ -263,7 +263,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 
 		}else{// end of if(!m_pRecordset->ADOEOF)
 			if((m_pRecordset!=NULL) && (m_pRecordset->State)){
-				m_pRecordset->Close(); //关闭连接
+				//m_pRecordset->Close(); //关闭连接
 				m_pRecordset.Release();//释放连接
 				m_pRecordset=NULL;
 			}
@@ -272,7 +272,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 		}
 	}catch(_com_error &e){
 		if((m_pRecordset!=NULL) && (m_pRecordset->State)){
-			m_pRecordset->Close(); //关闭连接
+			//m_pRecordset->Close(); //关闭连接
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}
