@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "lab1.h"
 #include "AdoMySQLHelper.h"
-#include "MySQL_Statu.h"
+
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -52,7 +52,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Connect(){
 			this->m_pConn.Release();//释放连接
 			this->m_pConn=NULL;
 		}
-		CString msg = e.Description();
+		CString msg = (LPCSTR)e.Description();
 		CMySQL_Statu mysql_statu(1,msg);
 		return mysql_statu;
 	}
@@ -83,8 +83,8 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& mon
 	try{
 		HRESULT hr = m_pCommand.CreateInstance("ADODB.Command");
 		if(FAILED(hr)){
-			AfxMessageBox("创建_CommandPtr智能指针失败");
-			return false;
+			CMySQL_Statu mysql_statu(2,"创建_CommandPtr智能指针失败");
+			return mysql_statu;
 		}
 		//定义为无参数
 		_variant_t vNULL;
@@ -104,7 +104,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& mon
 			m_pCommand.Release();//释放连接
 			m_pCommand=NULL;
 		}
-		CString msg = e.Description();
+		CString msg = (LPCSTR)e.Description();
 		CMySQL_Statu mysql_statu(2,msg);
 		return mysql_statu;
 	}
@@ -121,7 +121,10 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 	_RecordsetPtr m_pRecordset;
 	try{
 		HRESULT hr = m_pRecordset.CreateInstance("ADODB.Recordset");
-		
+		if(FAILED(hr)){
+			CMySQL_Statu mysql_statu(3,"创建recordset指针失败，请检查!");
+			return mysql_statu;
+		}
 		_variant_t table_name = "card";; 
 
 		m_pRecordset->Open( table_name,
@@ -178,7 +181,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}
-		CString msg = e.Description();
+		CString msg = (LPCSTR)e.Description();
 		CMySQL_Statu mysql_statu(3,msg);
 		return mysql_statu;
 	}
@@ -195,8 +198,8 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 	try{
 		HRESULT hr = m_pRecordset.CreateInstance("ADODB.Recordset");
 		if(FAILED(hr)){
-			AfxMessageBox("创建recordset指针失败，请检查!");
-			return false;
+			CMySQL_Statu mysql_statu(4,"创建recordset指针失败，请检查!");
+			return mysql_statu;
 		}
 
 		CString strsql = "select * from card where uid = \'"+uid+"\';";
@@ -273,7 +276,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}
-		CString msg = e.Description();
+		CString msg = (LPCSTR)e.Description();
 		CMySQL_Statu mysql_statu(4,msg);
 		return mysql_statu;
 	}

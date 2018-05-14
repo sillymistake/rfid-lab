@@ -16,7 +16,7 @@ public:
 	CMySQL_Statu(const long& type,const CString &s);
 	void setString(const CString &s);
 	void settype(const long& type);
-	CString toString();
+	CString toCString();
 	long getType();
 	virtual ~CMySQL_Statu();
 private:
