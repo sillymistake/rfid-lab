@@ -21,6 +21,9 @@ public:
 	CMySQL_Statu MYSQL_Connect();
 	//关闭连接
 	void mySQL_close();
+	
+	//返回连接状态
+	bool r_connect_state();
 
 	//增删查改操作
 

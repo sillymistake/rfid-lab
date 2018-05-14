@@ -99,12 +99,14 @@ void CDebugger::OnButton2()
 	}
 }
 
-#define page 4
+#define page 14	
 #define block 0
 
 void CDebugger::OnInit()
-{
-	this->helper.MYSQL_Connect();
+{	
+	if(!this->helper.r_connect_state()){
+		this->helper.MYSQL_Connect();
+	}
 	//先获取uid
 	unsigned char uid[10];
 	int* uid_len = new int;
@@ -146,6 +148,7 @@ void CDebugger::OnInit()
 	state = write_account(page, block, pwdtype, pwd_c, account); //写卡
 	if(!state){
 		//弹出对话框显示写入成功
+		MessageBox("写卡成功");
 		CString tmp = "";
 		CMySQL_Statu sql_state = helper.MYSQL_Query(uid,tmp);
 		if(!sql_state.getType()){ //存在->更新
@@ -161,6 +164,9 @@ void CDebugger::OnInit()
 				MessageBox("钱包初始化成功");
 				writeRecord(rec);
 				OnQueryRecord();
+				return;
+			}else{
+				MessageBox(sql_state1.toCString());
 				return;
 			}
 		}
@@ -195,7 +201,7 @@ void CDebugger::OnQuery()
 		m_edit1.SetWindowText("寻卡失败");
 		return;
 	}
-
+	long account;
 	unsigned char pwdtype = 0x0B;
 	CString pwd = "FFFFFFFFFFFF";
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
@@ -285,12 +291,14 @@ void CDebugger::OnRecharge()
 			if(!state) {
 				money = "";
 				money.Format("%d",sum);
-				if(helper.MYSQL_Update(uid,money).getType()){
+				CMySQL_Statu mysql_statu = helper.MYSQL_Update(uid,money);
+				if(!mysql_statu.getType()){
 					MessageBox("充值成功!");
 					writeRecord(rec);
 					OnQueryRecord();
 					return;
 				}else{
+					MessageBox(mysql_statu.toCString());
 					return;
 				}
 				
@@ -350,7 +358,7 @@ void CDebugger::OnConsume()
 	state = read_account(page, block, pwdtype, pwd_c, &account);
 	CString money;
 	if(!state) {
-		if(helper.MYSQL_Query(uid,money).getType()){
+		if(!helper.MYSQL_Query(uid,money).getType()){
 			account = cstring_to_long(money);
 			long result = account - consume_money;
 			if(result < 0) {
@@ -361,7 +369,8 @@ void CDebugger::OnConsume()
 			if(!state) {
 				money = "";
 				money.Format("%d",result);
-				if(helper.MYSQL_Update(uid,money).getType()){
+				
+				if(!helper.MYSQL_Update(uid,money).getType()){
 					MessageBox("扣费成功!");
 					writeRecord(rec);
 					OnQueryRecord();

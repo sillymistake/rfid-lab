@@ -6,7 +6,7 @@
 --------------------Configuration: lab1 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPEE03.tmp" with contents
+Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSP627C.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /debug /machine:I386 /out:"Debug/lab1.exe" /pdbtype:sept /libpath:"./libs" 
 ".\Debug\AdoMySQLHelper.obj"
@@ -18,7 +18,7 @@ ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /de
 ".\Debug\StdAfx.obj"
 ".\Debug\lab1.res"
 ]
-Creating command line "link.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPEE03.tmp"
+Creating command line "link.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSP627C.tmp"
 <h3>Output Window</h3>
 Linking...
 

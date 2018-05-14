@@ -27,6 +27,9 @@ CAdoMySQLHelper::~CAdoMySQLHelper()
 {
 	this->mySQL_close();
 }
+bool CAdoMySQLHelper::r_connect_state(){
+	return this->connect_state;
+}
 CMySQL_Statu CAdoMySQLHelper::MYSQL_Connect(){
 	try{
 		HRESULT hr = this->m_pConn.CreateInstance("ADODB.Connection");
@@ -79,6 +82,12 @@ void CAdoMySQLHelper::mySQL_close(){
 *@retval fool
 */
 CMySQL_Statu CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& money){
+	if(!this->connect_state){
+		CMySQL_Statu m_statu = this->MYSQL_Connect();
+		if(m_statu.getType()){
+			return m_statu;
+		}
+	}
 	_CommandPtr m_pCommand;
 	try{
 		HRESULT hr = m_pCommand.CreateInstance("ADODB.Command");
@@ -118,6 +127,12 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& mon
 *@retval fool
 */
 CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& money){
+	if(!this->connect_state){
+		CMySQL_Statu m_statu = this->MYSQL_Connect();
+		if(m_statu.getType()){
+			return m_statu;
+		}
+	}
 	_RecordsetPtr m_pRecordset;
 	try{
 		HRESULT hr = m_pRecordset.CreateInstance("ADODB.Recordset");
@@ -194,6 +209,12 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 *@retval fool
 */
 CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
+	if(!this->connect_state){
+		CMySQL_Statu m_statu = this->MYSQL_Connect();
+		if(m_statu.getType()){
+			return m_statu;
+		}
+	}
 	_RecordsetPtr m_pRecordset;
 	try{
 		HRESULT hr = m_pRecordset.CreateInstance("ADODB.Recordset");
