@@ -163,7 +163,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 				}
 				m_pRecordset->MoveNext();
 			}// end of while(!m_pRecordset->ADOEOF)
-			m_pRecordset->Close(); //关闭连接
+			//m_pRecordset->Close(); //关闭连接
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 			if(!flag){
@@ -177,7 +177,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 
 	}catch(_com_error &e){
 		if((m_pRecordset!=NULL) && (m_pRecordset->State)){
-			m_pRecordset->Close(); //关闭连接
+			//m_pRecordset->Close(); //关闭连接
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}
