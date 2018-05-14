@@ -37,6 +37,7 @@ public:
 
 private:
 	_ConnectionPtr m_pConn;
+	bool connect_state;
 };
 
 #endif // !defined(AFX_ADOMYSQLHELPER_H__E2464E06_628E_4375_84A3_F9468F3C76E6__INCLUDED_)

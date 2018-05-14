@@ -6,13 +6,13 @@
 --------------------Configuration: lab1 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPFD9A.tmp" with contents
+Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPAA3.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/lab1.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp"
 ]
-Creating command line "cl.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPFD9A.tmp" 
-Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPFD9B.tmp" with contents
+Creating command line "cl.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPAA3.tmp" 
+Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSPAA4.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /debug /machine:I386 /out:"Debug/lab1.exe" /pdbtype:sept /libpath:"./libs" 
 ".\Debug\AdoMySQLHelper.obj"
@@ -20,17 +20,18 @@ ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /de
 ".\Debug\Debugger.obj"
 ".\Debug\lab1.obj"
 ".\Debug\lab1Dlg.obj"
+".\Debug\MySQL_Statu.obj"
 ".\Debug\StdAfx.obj"
 ".\Debug\lab1.res"
 ]
-Creating command line "link.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPFD9B.tmp"
+Creating command line "link.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSPAA4.tmp"
 <h3>Output Window</h3>
 Compiling...
 Debugger.cpp
 e:\the third term down\rfid\rfid-lab\lab5\debug\msado15.tlh(476) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
 E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(134) : warning C4101: 'des_data' : unreferenced local variable
 Linking...
-Creating command line "bscmake.exe /nologo /o"Debug/lab1.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\AdoMySQLHelper.sbr" ".\Debug\AppDev.sbr" ".\Debug\Debugger.sbr" ".\Debug\lab1.sbr" ".\Debug\lab1Dlg.sbr""
+Creating command line "bscmake.exe /nologo /o"Debug/lab1.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\AdoMySQLHelper.sbr" ".\Debug\AppDev.sbr" ".\Debug\Debugger.sbr" ".\Debug\lab1.sbr" ".\Debug\lab1Dlg.sbr" ".\Debug\MySQL_Statu.sbr""
 Creating browse info file...
 <h3>Output Window</h3>
 

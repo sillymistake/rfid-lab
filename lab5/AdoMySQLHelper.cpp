@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "lab1.h"
 #include "AdoMySQLHelper.h"
+#include "MySQL_Statu.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -18,19 +19,20 @@ static char THIS_FILE[]=__FILE__;
 
 CAdoMySQLHelper::CAdoMySQLHelper()
 {
+	CoInitialize(NULL);
+	this->connect_state = false;
 }
 
 CAdoMySQLHelper::~CAdoMySQLHelper()
 {
 	this->mySQL_close();
 }
-bool CAdoMySQLHelper::MYSQL_Connect(){
-	CoInitialize(NULL);
+CMySQL_Statu CAdoMySQLHelper::MYSQL_Connect(){
 	try{
 		HRESULT hr = this->m_pConn.CreateInstance("ADODB.Connection");
 		if(FAILED(hr)){
-			AfxMessageBox("创建_ConnectionPtr智能指针失败");
-			return false;
+			CMySQL_Statu mysql_statu(1,"创建_ConnectionPtr智能指针失败");
+			return mysql_statu;
 		}
 		
 		//设置连接超时时间  
@@ -42,6 +44,7 @@ bool CAdoMySQLHelper::MYSQL_Connect(){
 							"root",
 							"",
 								   adModeUnknown);
+		this->connect_state = true;
 
 	}catch(_com_error &e){
 		if((this->m_pConn!=NULL) && (this->m_pConn->State)){
@@ -49,10 +52,12 @@ bool CAdoMySQLHelper::MYSQL_Connect(){
 			this->m_pConn.Release();//释放连接
 			this->m_pConn=NULL;
 		}
-		AfxMessageBox(e.Description());
-		return false;
+		CString msg = e.Description();
+		CMySQL_Statu mysql_statu(1,msg);
+		return mysql_statu;
 	}
-	return true;
+	CMySQL_Statu mysql_statu(0,"连接成功");
+	return mysql_statu;
 }
 /*
 *@function 断开数据库连接
@@ -73,7 +78,7 @@ void CAdoMySQLHelper::mySQL_close(){
 *@param CString,CString
 *@retval fool
 */
-bool CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& money){
+CMySQL_Statu CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& money){
 	_CommandPtr m_pCommand;
 	try{
 		HRESULT hr = m_pCommand.CreateInstance("ADODB.Command");
@@ -99,10 +104,12 @@ bool CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& money){
 			m_pCommand.Release();//释放连接
 			m_pCommand=NULL;
 		}
-		AfxMessageBox(e.Description());
-		return false;
+		CString msg = e.Description();
+		CMySQL_Statu mysql_statu(2,msg);
+		return mysql_statu;
 	}
-	return true;
+	CMySQL_Statu mysql_statu(0,"插入成功");
+	return mysql_statu;
 }
 
 /*
@@ -110,7 +117,7 @@ bool CAdoMySQLHelper::MYSQL_Insert(const CString& uid,const CString& money){
 *@param CString,CString
 *@retval fool
 */
-bool CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& money){
+CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& money){
 	_RecordsetPtr m_pRecordset;
 	try{
 		HRESULT hr = m_pRecordset.CreateInstance("ADODB.Recordset");
@@ -126,7 +133,7 @@ bool CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& money){
 		if(!m_pRecordset->ADOEOF){
 			//移动游标到最前，即ADOBOF
 			m_pRecordset->MoveFirst();
-
+			bool flag = false;
 			//循环遍历数据集，可以获取每行记录每列字段的属性值
 			while(!m_pRecordset->ADOEOF){
 				//寻找满足某个条件的记录
@@ -146,18 +153,23 @@ bool CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& money){
 					//方式三
 					_variant_t var3 = (LPCTSTR)money;
 					m_pRecordset->PutCollect("money", var3);
-					
+					flag = true;
 					//必须在移动游标前执行更新!!
 					m_pRecordset->Update();
 					break;
 				}
 				m_pRecordset->MoveNext();
 			}// end of while(!m_pRecordset->ADOEOF)
+			if(!flag){
+				CMySQL_Statu mysql_statu(3,"无该uid对应的值");
+				return mysql_statu;
+			}
 			m_pRecordset->Close(); //关闭连接
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}else{
-
+			CMySQL_Statu mysql_statu(3,"无该uid对应的值");
+			return mysql_statu;
 		}
 
 	}catch(_com_error &e){
@@ -166,17 +178,19 @@ bool CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& money){
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}
-		AfxMessageBox(e.Description());
-		return false;
+		CString msg = e.Description();
+		CMySQL_Statu mysql_statu(3,msg);
+		return mysql_statu;
 	}
-	return true;
+	CMySQL_Statu mysql_statu(0,"修改成功");
+	return mysql_statu;
 }
 /*
 *@function 数据库查询
 *@param CString,CString
 *@retval fool
 */
-bool CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
+CMySQL_Statu CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 	_RecordsetPtr m_pRecordset;
 	try{
 		HRESULT hr = m_pRecordset.CreateInstance("ADODB.Recordset");
@@ -203,13 +217,13 @@ bool CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 			while(!m_pRecordset->ADOEOF){
 				//方式一
 				if(flag){
-					AfxMessageBox("出现重复字段，请检查!");
 					if((m_pRecordset!=NULL) && (m_pRecordset->State)){
 						m_pRecordset->Close(); //关闭连接
 						m_pRecordset.Release();//释放连接
 						m_pRecordset=NULL;
 					}
-					return false; 
+					CMySQL_Statu mysql_statu(4,"出现重复字段，请检查!");
+					return mysql_statu;
 				}else{
 					flag = true;
 				}	
@@ -233,17 +247,25 @@ bool CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 
 				m_pRecordset->MoveNext();
 			} // end of while(!m_pRecordset->ADOEOF)
+
+
 			m_pRecordset->Close(); //关闭连接
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
+
+			if(!flag){
+				CMySQL_Statu mysql_statu(4,"无该uid对应金额，请重新读取卡片!");
+				return mysql_statu;
+			}
+
 		}else{// end of if(!m_pRecordset->ADOEOF)
-			AfxMessageBox("无该uid对应金额，请重新输入uid!");
 			if((m_pRecordset!=NULL) && (m_pRecordset->State)){
 				m_pRecordset->Close(); //关闭连接
 				m_pRecordset.Release();//释放连接
 				m_pRecordset=NULL;
 			}
-			return false; 
+			CMySQL_Statu mysql_statu(4,"无该uid对应金额，请重新读取卡片!");
+			return mysql_statu;
 		}
 	}catch(_com_error &e){
 		if((m_pRecordset!=NULL) && (m_pRecordset->State)){
@@ -251,8 +273,10 @@ bool CAdoMySQLHelper::MYSQL_Query(const CString& uid,CString& money){
 			m_pRecordset.Release();//释放连接
 			m_pRecordset=NULL;
 		}
-		AfxMessageBox(e.Description());
-		return false;
+		CString msg = e.Description();
+		CMySQL_Statu mysql_statu(4,msg);
+		return mysql_statu;
 	}
-	return true;
+	CMySQL_Statu mysql_statu(0,"查询成功");
+	return mysql_statu;
 }
