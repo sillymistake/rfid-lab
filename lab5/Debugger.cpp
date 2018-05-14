@@ -120,7 +120,7 @@ void CDebugger::OnInit()
 		m_edit2.SetWindowText(str);
 		m_edit1.SetWindowText("Ñ°¿¨³É¹¦");
 	}*/
-	CString uid = "ffffffff";
+	uid = "ffffffff";
 
 	// TODO: Add your control notification handler code here
 	CString balance;

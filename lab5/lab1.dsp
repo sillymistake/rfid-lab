@@ -115,6 +115,10 @@ SOURCE=.\lab1Dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MySQL_Statu.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -141,6 +145,10 @@ SOURCE=.\lab1.h
 # Begin Source File
 
 SOURCE=.\lab1Dlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MySQL_Statu.h
 # End Source File
 # Begin Source File
 
