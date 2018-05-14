@@ -105,13 +105,14 @@ void CDebugger::OnButton2()
 void CDebugger::OnInit()
 {
 	this->helper.MYSQL_Connect();
-	/*unsigned char uid[10];	
+	//先获取uid
+	unsigned char uid[10];
 	int* uid_len = new int;
-	int state = find_14443(uid, uid_len);
+	int state1 = find_14443(uid, uid_len);
 	CString str;
-	str.Format("%d",state);
+	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
-	if(state == 0) {
+	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
 			b=b*256+(int)uid[i];
@@ -119,10 +120,12 @@ void CDebugger::OnInit()
 		str.Format(("%x"),b);
 		m_edit2.SetWindowText(str);
 		m_edit1.SetWindowText("寻卡成功");
-	}*/
-	uid = "ffffffff";
-
-	// TODO: Add your control notification handler code here
+	}
+	else {
+		m_edit1.SetWindowText("寻卡失败");
+		return;
+	}
+	//读取金额
 	CString balance;
 	m_balance.GetWindowText(balance);
 	if(balance.IsEmpty()){
@@ -140,22 +143,19 @@ void CDebugger::OnInit()
 	CString pwd="FFFFFFFFFFFF";
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
 	long account = cstring_to_long(balance);
-	state = 0;//write_account(page, block, pwdtype, pwd_c, account);
+	state = write_account(page, block, pwdtype, pwd_c, account); //写卡
 	if(!state){
 		//弹出对话框显示写入成功
 		CString tmp = "";
-		//CMySQL_Statu sql_state = helper.MYSQL_Query(uid,tmp);
-		//CMySQL_Statu sql_state1 = helper.MYSQL_Insert(uid,balance);
-		CMySQL_Statu sql_state1 = helper.MYSQL_Update(uid,balance);
-		/*
-		if(!sql_state.getType()){
+		CMySQL_Statu sql_state = helper.MYSQL_Query(uid,tmp);
+		if(!sql_state.getType()){ //存在->更新
 			CMySQL_Statu sql_state1 = helper.MYSQL_Update(uid,balance);
 			MessageBox("钱包初始化成功");
 			writeRecord(rec);
 			OnQueryRecord();
 			return;
 		}
-		else{
+		else{ //不存在->插入
 			CMySQL_Statu sql_state1 = helper.MYSQL_Insert(uid,balance);
 			if(!sql_state1.getType()){
 				MessageBox("钱包初始化成功");
@@ -164,7 +164,6 @@ void CDebugger::OnInit()
 				return;
 			}
 		}
-		*/
 	}
 	//弹出状态码state
 	CString str_;
@@ -176,15 +175,33 @@ void CDebugger::OnInit()
 void CDebugger::OnQuery() 
 {
 	// TODO: Add your control notification handler code here
-	// int read_account(int page, int block, unsigned char pswtype, unsigned char *psw, LONG* account);
+	//先获取uid
+	unsigned char uid[10];
+	int* uid_len = new int;
+	int state1 = find_14443(uid, uid_len);
+	CString str;
+	str.Format("%d",state1);
+	m_edit2.SetWindowText(str);
+	if(state1 == 0) {
+		int b = 0;
+		for(int i=0; i<*uid_len; i++){
+			b=b*256+(int)uid[i];
+		}
+		str.Format(("%x"),b);
+		m_edit2.SetWindowText(str);
+		m_edit1.SetWindowText("寻卡成功");
+	}
+	else {
+		m_edit1.SetWindowText("寻卡失败");
+		return;
+	}
+
 	unsigned char pwdtype = 0x0B;
 	CString pwd = "FFFFFFFFFFFF";
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
-	long account=100;
 	int state;
-	state = 0;//read_account(page, block, pwdtype, pwd_c, &account);
+	state = read_account(page, block, pwdtype, pwd_c, &account);
 	if(!state) {
-		uid = "ffffffff";
 		CString money;
 		if(!helper.MYSQL_Query(uid,money).getType()){
 			CString str_;
@@ -195,7 +212,7 @@ void CDebugger::OnQuery()
 			}else{
 				MessageBox("卡上余额与数据库数据不符，恢复数据库数据!");
 				account = cstring_to_long(money);
-				state = 0;//write_account(page, block, pwdtype, pwd_c, account);
+				state = write_account(page, block, pwdtype, pwd_c, account);
 				if(!state){
 					//弹出对话框显示写入成功
 					CString rec = "卡上余额与数据库数据不符，恢复数据库数据:"+money;
@@ -221,6 +238,28 @@ void CDebugger::OnQuery()
 void CDebugger::OnRecharge() 
 {
 	// TODO: Add your control notification handler code here
+
+	//先获取uid
+	unsigned char uid[10];
+	int* uid_len = new int;
+	int state1 = find_14443(uid, uid_len);
+	CString str;
+	str.Format("%d",state1);
+	m_edit2.SetWindowText(str);
+	if(state1 == 0) {
+		int b = 0;
+		for(int i=0; i<*uid_len; i++){
+			b=b*256+(int)uid[i];
+		}
+		str.Format(("%x"),b);
+		m_edit2.SetWindowText(str);
+		m_edit1.SetWindowText("寻卡成功");
+	}
+	else {
+		m_edit1.SetWindowText("寻卡失败");
+		return;
+	}
+
 	CString recharge_s;
 	CString rec = "充值金额: ";
 	m_recharge.GetWindowText(recharge_s);
@@ -236,13 +275,13 @@ void CDebugger::OnRecharge()
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
 	long account;
 	int state;
-	state = 0;//read_account(page, block, pwdtype, pwd_c, &account);
+	state = read_account(page, block, pwdtype, pwd_c, &account);
 	CString money;
 	if(!state) {
 		if(!helper.MYSQL_Query(uid,money).getType()){
 			account = cstring_to_long(money);
 			long sum = recharge_money + account;
-			//state = write_account(page, block, pwdtype, pwd_c, sum);
+			state = write_account(page, block, pwdtype, pwd_c, sum);
 			if(!state) {
 				money = "";
 				money.Format("%d",sum);
@@ -272,6 +311,27 @@ void CDebugger::OnRecharge()
 void CDebugger::OnConsume() 
 {
 	// TODO: Add your control notification handler code here
+	//先获取uid
+	unsigned char uid[10];
+	int* uid_len = new int;
+	int state1 = find_14443(uid, uid_len);
+	CString str;
+	str.Format("%d",state1);
+	m_edit2.SetWindowText(str);
+	if(state1 == 0) {
+		int b = 0;
+		for(int i=0; i<*uid_len; i++){
+			b=b*256+(int)uid[i];
+		}
+		str.Format(("%x"),b);
+		m_edit2.SetWindowText(str);
+		m_edit1.SetWindowText("寻卡成功");
+	}
+	else {
+		m_edit1.SetWindowText("寻卡失败");
+		return;
+	}
+
 	CString consume_s;
 	CString rec = "扣取金额: ";
 	m_consume.GetWindowText(consume_s);
@@ -287,7 +347,7 @@ void CDebugger::OnConsume()
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
 	long account;
 	int state;
-	state = 0;//read_account(page, block, pwdtype, pwd_c, &account);
+	state = read_account(page, block, pwdtype, pwd_c, &account);
 	CString money;
 	if(!state) {
 		if(helper.MYSQL_Query(uid,money).getType()){
@@ -297,7 +357,7 @@ void CDebugger::OnConsume()
 				MessageBox("余额不足，扣费失败!");
 				return;
 			}
-			//state = write_account(page, block, pwdtype, pwd_c, result);
+			state = write_account(page, block, pwdtype, pwd_c, result);
 			if(!state) {
 				money = "";
 				money.Format("%d",result);
