@@ -47,6 +47,15 @@
 #define IDC_pwd                         1036
 #define IDC_PAGE                        1037
 #define IDC_BLOCK                       1038
+#define IDC_START_CLOCK                 1039
+#define IDC_STOP_CLOCK                  1040
+#define IDC_RESET_TIME                  1041
+#define IDC_QUERY_TIME                  1042
+#define IDC_HOUR                        1043
+#define IDC_MINUTE                      1044
+#define IDC_EDIT10                      1045
+#define IDC_EDIT11                      1046
+#define IDC_SECOND                      1047
 
 // Next default values for new objects
 // 
@@ -54,7 +63,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        134
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1039
+#define _APS_NEXT_CONTROL_VALUE         1048
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
