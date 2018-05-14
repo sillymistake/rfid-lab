@@ -143,13 +143,28 @@ void CDebugger::OnInit()
 	state = 0;//write_account(page, block, pwdtype, pwd_c, account);
 	if(!state){
 		//弹出对话框显示写入成功
-		
-		if(helper.MYSQL_Insert(uid,balance)){//数据库操作
+		CString tmp = "";
+		//CMySQL_Statu sql_state = helper.MYSQL_Query(uid,tmp);
+		//CMySQL_Statu sql_state1 = helper.MYSQL_Insert(uid,balance);
+		CMySQL_Statu sql_state1 = helper.MYSQL_Update(uid,balance);
+		/*
+		if(!sql_state.getType()){
+			CMySQL_Statu sql_state1 = helper.MYSQL_Update(uid,balance);
 			MessageBox("钱包初始化成功");
 			writeRecord(rec);
 			OnQueryRecord();
 			return;
 		}
+		else{
+			CMySQL_Statu sql_state1 = helper.MYSQL_Insert(uid,balance);
+			if(!sql_state1.getType()){
+				MessageBox("钱包初始化成功");
+				writeRecord(rec);
+				OnQueryRecord();
+				return;
+			}
+		}
+		*/
 	}
 	//弹出状态码state
 	CString str_;
@@ -171,7 +186,7 @@ void CDebugger::OnQuery()
 	if(!state) {
 		uid = "ffffffff";
 		CString money;
-		if(helper.MYSQL_Query(uid,money)){
+		if(!helper.MYSQL_Query(uid,money).getType()){
 			CString str_;
 			str_.Format("%d", account);
 			m_balance.SetWindowText(money);
@@ -224,14 +239,14 @@ void CDebugger::OnRecharge()
 	state = 0;//read_account(page, block, pwdtype, pwd_c, &account);
 	CString money;
 	if(!state) {
-		if(helper.MYSQL_Query(uid,money)){
+		if(!helper.MYSQL_Query(uid,money).getType()){
 			account = cstring_to_long(money);
 			long sum = recharge_money + account;
 			//state = write_account(page, block, pwdtype, pwd_c, sum);
 			if(!state) {
 				money = "";
 				money.Format("%d",sum);
-				if(helper.MYSQL_Update(uid,money)){
+				if(helper.MYSQL_Update(uid,money).getType()){
 					MessageBox("充值成功!");
 					writeRecord(rec);
 					OnQueryRecord();
@@ -275,7 +290,7 @@ void CDebugger::OnConsume()
 	state = 0;//read_account(page, block, pwdtype, pwd_c, &account);
 	CString money;
 	if(!state) {
-		if(helper.MYSQL_Query(uid,money)){
+		if(helper.MYSQL_Query(uid,money).getType()){
 			account = cstring_to_long(money);
 			long result = account - consume_money;
 			if(result < 0) {
@@ -286,7 +301,7 @@ void CDebugger::OnConsume()
 			if(!state) {
 				money = "";
 				money.Format("%d",result);
-				if(helper.MYSQL_Update(uid,money)){
+				if(helper.MYSQL_Update(uid,money).getType()){
 					MessageBox("扣费成功!");
 					writeRecord(rec);
 					OnQueryRecord();

@@ -1,9 +1,9 @@
-// Created by Microsoft (R) C/C++ Compiler Version 12.00.8168.0 (91c4b86e).
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8168.0 (53590871).
 //
-// e:\the third term down\rfid\rfid-lab\lab5\debug\msado15.tlh
+// d:\大三下\rfid\rfid-lab\lab5\debug\msado15.tlh
 //
 // C++ source equivalent of type library ./libs/msado15.dll
-// compiler-generated file created 05/14/18 at 10:24:30 - DO NOT EDIT!
+// compiler-generated file created 05/14/18 at 20:52:42 - DO NOT EDIT!
 
 #pragma once
 #pragma pack(push, 8)
@@ -4919,7 +4919,7 @@ Field15_Deprecated : _ADO
 // Function implementation mapping
 //
 
-#pragma start_map_region("e:\the third term down\rfid\rfid-lab\lab5\debug\msado15.tli")
+#pragma start_map_region("d:\大三下\rfid\rfid-lab\lab5\debug\msado15.tli")
 __declspec(implementation_key(1)) long _Collection::GetCount ( );
 __declspec(implementation_key(2)) IUnknownPtr _Collection::_NewEnum ( );
 __declspec(implementation_key(3)) HRESULT _Collection::Refresh ( );

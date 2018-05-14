@@ -6,17 +6,13 @@
 --------------------Configuration: lab1 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSP8522.tmp" with contents
+Creating temporary file "C:\Users\10743\AppData\Local\Temp\RSP68FE.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/lab1.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"E:\the third term down\RFID\rfid-lab\lab5\AdoMySQLHelper.cpp"
-"E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp"
-"E:\the third term down\RFID\rfid-lab\lab5\lab1.cpp"
-"E:\the third term down\RFID\rfid-lab\lab5\lab1Dlg.cpp"
-"E:\the third term down\RFID\rfid-lab\lab5\MySQL_Statu.cpp"
+"D:\大三下\RFID\rfid-lab\lab5\AdoMySQLHelper.cpp"
 ]
-Creating command line "cl.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSP8522.tmp" 
-Creating temporary file "C:\Users\FALLDE~1\AppData\Local\Temp\RSP8523.tmp" with contents
+Creating command line "cl.exe @C:\Users\10743\AppData\Local\Temp\RSP68FE.tmp" 
+Creating temporary file "C:\Users\10743\AppData\Local\Temp\RSP68FF.tmp" with contents
 [
 ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /debug /machine:I386 /out:"Debug/lab1.exe" /pdbtype:sept /libpath:"./libs" 
 ".\Debug\AdoMySQLHelper.obj"
@@ -28,30 +24,12 @@ ZM124U.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/lab1.pdb" /de
 ".\Debug\StdAfx.obj"
 ".\Debug\lab1.res"
 ]
-Creating command line "link.exe @C:\Users\FALLDE~1\AppData\Local\Temp\RSP8523.tmp"
+Creating command line "link.exe @C:\Users\10743\AppData\Local\Temp\RSP68FF.tmp"
 <h3>Output Window</h3>
 Compiling...
-Debugger.cpp
-e:\the third term down\rfid\rfid-lab\lab5\debug\msado15.tlh(476) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
-E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(147) : error C2451: conditional expression of type 'class CMySQL_Statu' is illegal
-        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(174) : error C2451: conditional expression of type 'class CMySQL_Statu' is illegal
-        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(227) : error C2451: conditional expression of type 'class CMySQL_Statu' is illegal
-        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(234) : error C2451: conditional expression of type 'class CMySQL_Statu' is illegal
-        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(278) : error C2451: conditional expression of type 'class CMySQL_Statu' is illegal
-        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-E:\the third term down\RFID\rfid-lab\lab5\Debugger.cpp(289) : error C2451: conditional expression of type 'class CMySQL_Statu' is illegal
-        No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-MySQL_Statu.cpp
-Generating Code...
-Skipping... (no relevant changes detected)
 AdoMySQLHelper.cpp
-lab1.cpp
-lab1Dlg.cpp
-执行 cl.exe 时出错.
+d:\大三下\rfid\rfid-lab\lab5\debug\msado15.tlh(476) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+Linking...
 Creating command line "bscmake.exe /nologo /o"Debug/lab1.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\AdoMySQLHelper.sbr" ".\Debug\AppDev.sbr" ".\Debug\Debugger.sbr" ".\Debug\lab1.sbr" ".\Debug\lab1Dlg.sbr" ".\Debug\MySQL_Statu.sbr""
 Creating browse info file...
 <h3>Output Window</h3>
@@ -59,7 +37,7 @@ Creating browse info file...
 
 
 <h3>Results</h3>
-lab1.exe - 1 error(s), 0 warning(s)
+lab1.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

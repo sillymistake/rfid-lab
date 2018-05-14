@@ -125,7 +125,7 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 			CMySQL_Statu mysql_statu(3,"创建recordset指针失败，请检查!");
 			return mysql_statu;
 		}
-		_variant_t table_name = "card";; 
+		_variant_t table_name = "card"; 
 
 		m_pRecordset->Open( table_name,
 							_variant_t((IDispatch*)(this->m_pConn),true),
@@ -163,13 +163,13 @@ CMySQL_Statu CAdoMySQLHelper::MYSQL_Update(const CString& uid,const CString& mon
 				}
 				m_pRecordset->MoveNext();
 			}// end of while(!m_pRecordset->ADOEOF)
+			m_pRecordset->Close(); //关闭连接
+			m_pRecordset.Release();//释放连接
+			m_pRecordset=NULL;
 			if(!flag){
 				CMySQL_Statu mysql_statu(3,"无该uid对应的值");
 				return mysql_statu;
 			}
-			m_pRecordset->Close(); //关闭连接
-			m_pRecordset.Release();//释放连接
-			m_pRecordset=NULL;
 		}else{
 			CMySQL_Statu mysql_statu(3,"无该uid对应的值");
 			return mysql_statu;
