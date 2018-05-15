@@ -29,6 +29,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CDebugger)
 	enum { IDD = IDD_DEBUGGER };
+	CButton	m_query_time;
 	CButton	m_stop_clock;
 	CButton	m_reset_time;
 	CButton	m_start_clock;

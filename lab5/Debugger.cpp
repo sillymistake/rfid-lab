@@ -34,6 +34,7 @@ void CDebugger::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDebugger)
+	DDX_Control(pDX, IDC_QUERY_TIME, m_query_time);
 	DDX_Control(pDX, IDC_STOP_CLOCK, m_stop_clock);
 	DDX_Control(pDX, IDC_RESET_TIME, m_reset_time);
 	DDX_Control(pDX, IDC_START_CLOCK, m_start_clock);
@@ -554,6 +555,7 @@ void CDebugger::OnStartClock()
 		m_ActiveTimer = SetTimer(SCANTIMER_ID, SCANTIMER * 1000, NULL);
 		m_reset_time.EnableWindow(0);
 		m_start_clock.EnableWindow(0);
+		m_query_time.EnableWindow(0);
 		m_stop_clock.EnableWindow(1);
 		CString rec = "上网开始！时间: ";
 		CTime m_time;  
