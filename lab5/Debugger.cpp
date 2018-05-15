@@ -329,7 +329,7 @@ void CDebugger::OnRecharge()
 	m_state.SetWindowText(str_);
 }
 
-void CDebugger::OnConsume() 
+void CDebugger::OnConsume()
 {
 	// TODO: Add your control notification handler code here
 	//先获取uid
@@ -397,8 +397,6 @@ void CDebugger::OnConsume()
 			str_.Format("%d",state);
 			m_state.SetWindowText(str_);
 		}
-		
-			
 	}
 	//弹出状态码state
 	CString str_;
@@ -408,8 +406,7 @@ void CDebugger::OnConsume()
 }
 void CDebugger::OnResetTime() 
 {
-	// TODO: Add your control notification handler code here
-	
+	//获得初始化时间
 	long time = 0;
 	CString str;
 	m_hour.GetWindowText(str);
@@ -431,19 +428,18 @@ void CDebugger::OnResetTime()
 		return;
 	}
 	time+=time_;
-	//获得初始化时间
 	
 	//先获取uid
-	/*unsigned char uid[10];
+	unsigned char _uid[10];
 	int* uid_len = new int;
-	int state1 = find_14443(uid, uid_len);
+	int state1 = find_14443(_uid, uid_len);
 	str="";
 	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
 	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
-			b=b*256+(int)uid[i];
+			b=b*256+(int)_uid[i];
 		}
 		str.Format(("%x"),b);
 		m_edit2.SetWindowText(str);
@@ -452,8 +448,11 @@ void CDebugger::OnResetTime()
 	else {
 		m_edit1.SetWindowText("寻卡失败");
 		return;
-	}*/
-	uid="ffffffff";
+	}
+	
+	// CString _uid = "ffffffff";
+
+	uid = _uid;
 	
 	str = "";
 	str.Format("%d",time);
@@ -495,19 +494,20 @@ void CDebugger::OnResetTime()
 }
 void CDebugger::OnQueryTime() 
 {
-	// TODO: Add your control notification handler code here
 	CString tmp;
-
-	/*unsigned char uid[10];
+	CString str;
+	
+	//先获取uid
+	unsigned char _uid[10];
 	int* uid_len = new int;
-	int state1 = find_14443(uid, uid_len);
+	int state1 = find_14443(_uid, uid_len);
 	str="";
 	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
 	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
-			b=b*256+(int)uid[i];
+			b=b*256+(int)_uid[i];
 		}
 		str.Format(("%x"),b);
 		m_edit2.SetWindowText(str);
@@ -516,10 +516,12 @@ void CDebugger::OnQueryTime()
 	else {
 		m_edit1.SetWindowText("寻卡失败");
 		return;
-	}*/
+	}
 
-	uid = "ffffffff";
-	CMySQL_Statu sql_state = helper.MYSQL_net_Query(uid,tmp);
+	// CString _uid = "ffffffff";
+	uid = _uid;
+
+	CMySQL_Statu sql_state = helper.MYSQL_net_Query(_uid,tmp);
 	if(!sql_state.getType()){
 		m_start_clock.EnableWindow(1);
 		long time = cstring_to_long(tmp);
@@ -594,6 +596,7 @@ void CDebugger::OnStopClock()
 	KillTimer(m_ActiveTimer);
 	m_reset_time.EnableWindow(1);
 	m_start_clock.EnableWindow(1);
+	m_query_time.EnableWindow(1);
 	m_stop_clock.EnableWindow(0);
 	CString tmp = "";
 	CMySQL_Statu sql_state = helper.MYSQL_net_Query(uid,tmp);
@@ -628,11 +631,6 @@ void CDebugger::OnStopClock()
 		return;
 	}
 }
-
-
-
-
-
 
 unsigned char* CDebugger::cstring_to_unsignedchar(CString s) { //将字符串密码转换成字节流
 	unsigned char *s_c = new unsigned char[s.GetLength()];
