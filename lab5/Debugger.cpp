@@ -121,18 +121,19 @@ void CDebugger::OnInit()
 		this->helper.MYSQL_Connect();
 	}
 	//先获取uid
-	unsigned char uid[10];
+	unsigned char uid_[10];
 	int* uid_len = new int;
-	int state1 = find_14443(uid, uid_len);
+	int state1 = find_14443(uid_, uid_len);
 	CString str;
 	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
 	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
-			b=b*256+(int)uid[i];
+			b=b*256+(int)uid_[i];
 		}
 		str.Format(("%x"),b);
+		uid = str;
 		m_edit2.SetWindowText(str);
 		m_edit1.SetWindowText("寻卡成功");
 	}
@@ -195,18 +196,19 @@ void CDebugger::OnQuery()
 {
 	// TODO: Add your control notification handler code here
 	//先获取uid
-	unsigned char uid[10];
+	unsigned char uid_[10];
 	int* uid_len = new int;
-	int state1 = find_14443(uid, uid_len);
+	int state1 = find_14443(uid_, uid_len);
 	CString str;
 	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
 	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
-			b=b*256+(int)uid[i];
+			b=b*256+(int)uid_[i];
 		}
 		str.Format(("%x"),b);
+		uid = str;
 		m_edit2.SetWindowText(str);
 		m_edit1.SetWindowText("寻卡成功");
 	}
@@ -259,18 +261,19 @@ void CDebugger::OnRecharge()
 	// TODO: Add your control notification handler code here
 
 	//先获取uid
-	unsigned char uid[10];
+	unsigned char uid_[10];
 	int* uid_len = new int;
-	int state1 = find_14443(uid, uid_len);
+	int state1 = find_14443(uid_, uid_len);
 	CString str;
 	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
 	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
-			b=b*256+(int)uid[i];
+			b=b*256+(int)uid_[i];
 		}
 		str.Format(("%x"),b);
+		uid = str;
 		m_edit2.SetWindowText(str);
 		m_edit1.SetWindowText("寻卡成功");
 	}
@@ -333,18 +336,19 @@ void CDebugger::OnConsume()
 {
 	// TODO: Add your control notification handler code here
 	//先获取uid
-	unsigned char uid[10];
+	unsigned char uid_[10];
 	int* uid_len = new int;
-	int state1 = find_14443(uid, uid_len);
+	int state1 = find_14443(uid_, uid_len);
 	CString str;
 	str.Format("%d",state1);
 	m_edit2.SetWindowText(str);
 	if(state1 == 0) {
 		int b = 0;
 		for(int i=0; i<*uid_len; i++){
-			b=b*256+(int)uid[i];
+			b=b*256+(int)uid_[i];
 		}
 		str.Format(("%x"),b);
+		uid = str;
 		m_edit2.SetWindowText(str);
 		m_edit1.SetWindowText("寻卡成功");
 	}
@@ -452,7 +456,7 @@ void CDebugger::OnResetTime()
 	
 	// CString _uid = "ffffffff";
 
-	uid = _uid;
+	uid = str;
 	
 	str = "";
 	str.Format("%d",time);
@@ -519,9 +523,8 @@ void CDebugger::OnQueryTime()
 	}
 
 	// CString _uid = "ffffffff";
-	uid = _uid;
-
-	CMySQL_Statu sql_state = helper.MYSQL_net_Query(_uid,tmp);
+	uid = str;
+	CMySQL_Statu sql_state = helper.MYSQL_net_Query(uid,tmp);
 	if(!sql_state.getType()){
 		m_start_clock.EnableWindow(1);
 		long time = cstring_to_long(tmp);
