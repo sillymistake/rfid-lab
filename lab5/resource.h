@@ -54,7 +54,9 @@
 #define IDC_HOUR                        1043
 #define IDC_MINUTE                      1044
 #define IDC_EDIT10                      1045
+#define IDC_SEC                         1045
 #define IDC_EDIT11                      1046
+#define IDC_INTERNET_STATE              1046
 #define IDC_SECOND                      1047
 
 // Next default values for new objects

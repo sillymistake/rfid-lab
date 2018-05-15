@@ -25,9 +25,16 @@ public:
 	void writeRecord(CString s);
 	CAdoMySQLHelper helper;
 	
+	
 // Dialog Data
 	//{{AFX_DATA(CDebugger)
 	enum { IDD = IDD_DEBUGGER };
+	CButton	m_stop_clock;
+	CButton	m_reset_time;
+	CButton	m_start_clock;
+	CEdit	m_second;
+	CEdit	m_minute;
+	CEdit	m_hour;
 	CEdit	m_record;
 	CEdit	m_consume;
 	CEdit	m_balance;
@@ -60,9 +67,15 @@ protected:
 	afx_msg void OnConsume();
 	afx_msg void OnClearRecord();
 	afx_msg void OnQueryRecord();
+	afx_msg void OnStartClock();
+	afx_msg void OnStopClock();
+	afx_msg void OnResetTime();
+	afx_msg void OnQueryTime();
+	afx_msg void OnTimer(UINT nIDEvent);
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-	
+	DECLARE_MESSAGE_MAP();
+private:
+    UINT_PTR m_ActiveTimer;
 };
 
 //{{AFX_INSERT_LOCATION}}

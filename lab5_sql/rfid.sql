@@ -7,4 +7,9 @@ CREATE TABLE `card` (
 `uid`  varchar(8) NOT NULL ,
 PRIMARY KEY (`uid`)
 );
+CREATE TABLE `card_net` (
+`time`  varchar(255) NOT NULL ,
+`uid`  varchar(8) NOT NULL ,
+PRIMARY KEY (`uid`)
+);
 

@@ -30,12 +30,19 @@ public:
 	//增操作
 	CMySQL_Statu MYSQL_Insert(const CString& uid,const CString& money);
 
+	CMySQL_Statu MYSQL_net_Insert(const CString& uid,const CString& time);
+
+	
 
 	//改操作
 	CMySQL_Statu MYSQL_Update(const CString& uid,const CString& money);
 
+	CMySQL_Statu MYSQL_net_Update(const CString& uid,const CString& time);
+
 	//查操作
 	CMySQL_Statu MYSQL_Query(const CString& uid,CString &money);
+
+	CMySQL_Statu MYSQL_net_Query(const CString& uid,CString &time);
 
 
 private:
