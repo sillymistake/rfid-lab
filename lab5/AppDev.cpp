@@ -268,8 +268,8 @@ void CAppDev::OnWriteblock()
 	int* des_len = new int;
 	int state;
 	unsigned char* pwd_c = cstring_to_unsignedchar(pwd);
-    //state = read_block(page,block,pwdtype,pwd_c,des_data,des_len);
-	state = 0;
+    state = read_block(page,block,pwdtype,pwd_c,des_data,des_len);
+	// state = 0;
 	CString str_;
 	str_.Format("%d",state);
 	m_block3a.SetWindowText(str_);
