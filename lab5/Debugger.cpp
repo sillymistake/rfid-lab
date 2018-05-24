@@ -112,7 +112,7 @@ void CDebugger::OnButton2()
 	}
 }
 
-#define page 14	
+#define page 3
 #define block 0
 
 void CDebugger::OnInit()
