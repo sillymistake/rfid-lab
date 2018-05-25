@@ -1,0 +1,10 @@
+#package specification
+#Fri May 25 09:00:41 CST 2018
+masktools-version=1.1
+test-major=1
+test-aid=1535204101
+jcop-packages=test
+test.hello-aid=153520410101
+test-clazzes=test.hello
+test-base=internal
+test-minor=0

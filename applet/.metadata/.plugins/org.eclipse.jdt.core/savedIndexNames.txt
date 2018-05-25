@@ -1,0 +1,5 @@
+INDEX VERSION 1.126+D:\´óÈıÏÂ\RFID\rfid-lab\applet\.metadata\.plugins\org.eclipse.jdt.core
+948888477.index
+147519512.index
+740489703.index
+241746439.index
