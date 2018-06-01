@@ -1,0 +1,10 @@
+#package specification
+#Fri Jun 01 10:58:08 CST 2018
+Purse-major=1
+masktools-version=1.1
+Purse.Purse-aid=153520410101
+Purse-minor=0
+Purse-base=internal
+jcop-packages=Purse
+Purse-aid=1535204101
+Purse-clazzes=Purse.Purse

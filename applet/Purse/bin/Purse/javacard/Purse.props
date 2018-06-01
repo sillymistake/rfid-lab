@@ -1,0 +1,10 @@
+#package specification
+#Fri Jun 01 12:47:26 CST 2018
+Purse-major=1
+masktools-version=1.1
+Purse.Purse-aid=153520410101
+Purse-minor=0
+Purse-base=internal
+jcop-packages=Purse
+Purse-aid=1535204101
+Purse-clazzes=Purse.BinaryFile Purse.condef Purse.KeyFile Purse.Papdu Purse.Purse

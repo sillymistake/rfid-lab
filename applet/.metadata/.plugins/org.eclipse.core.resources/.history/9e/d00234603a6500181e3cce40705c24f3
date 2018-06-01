@@ -1,0 +1,10 @@
+package Purse;
+
+import javacard.framework.JCSystem;
+
+public class Papdu {
+	public Papdu() {
+		byte[] pdata = JCSystem.makeTransientByteArray((short)255, JCSystem.CLEAR_ON_DESELECT);
+	}
+
+}

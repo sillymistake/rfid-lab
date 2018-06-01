@@ -26,3 +26,58 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2018-06-01 09:09:05.959 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.7.0_80
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-06-01 09:09:27.628
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\10743'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2018-06-01 09:19:25.796
+!MESSAGE Failed to open search index.
+
+!ENTRY com.ibm.bluez.jcop.eclipse 4 0 2018-06-01 10:58:35.855
+!MESSAGE No further information available.
+!STACK 0
+com.ibm.bluez.jcop.eclipse.internal.builder.BuilderException
+	at com.ibm.bluez.jcop.eclipse.internal.builder.BuilderUtil.getOutputPath(BuilderUtil.java:93)
+	at com.ibm.bluez.jcop.eclipse.internal.builder.BuilderUtil.getCapFilePath(BuilderUtil.java:892)
+	at com.ibm.bluez.jcop.eclipse.internal.ui.views.jcasm.BytecodeView.selectionChanged(BytecodeView.java:317)
+	at com.ibm.bluez.jcop.eclipse.internal.ui.views.jcasm.BytecodeView.resourceChanged(BytecodeView.java:284)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastBuildEvent(Workspace.java:381)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:146)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: Java Model Exception: Java Model Status [Show does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:495)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getPerProjectInfoCheckExistence(JavaModelManager.java:2285)
+	at org.eclipse.jdt.internal.core.JavaProject.getPerProjectInfo(JavaProject.java:1907)
+	at org.eclipse.jdt.internal.core.JavaProject.getOutputLocation(JavaProject.java:1734)
+	at com.ibm.bluez.jcop.eclipse.internal.builder.BuilderUtil.getOutputPath(BuilderUtil.java:91)
+	... 11 more
+!SESSION 2018-06-01 11:48:18.473 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.7.0_80
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-06-01 11:48:29.224
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\10743'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.

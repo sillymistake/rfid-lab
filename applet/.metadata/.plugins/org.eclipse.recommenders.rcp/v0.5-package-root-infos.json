@@ -1,0 +1,41 @@
+[
+  {
+    "symbolicName": "gp211",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "1cfa04d31a0e9eea398c2c51be5caae512aba6ae",
+    "jarFileModificationDate": "2006-10-31T11:38:28+08:00",
+    "location": "D:\\大三下\\RFID\\eclipse-java-juno-SR2-win32\\eclipse\\plugins\\com.ibm.bluez.jcop.eclipse_3.1.2\\apis\\gp211\\gp211.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "bio10",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "0e84e51fbbda490fa48ef6fc8a299ab440e242e0",
+    "jarFileModificationDate": "2006-10-31T11:38:28+08:00",
+    "location": "D:\\大三下\\RFID\\eclipse-java-juno-SR2-win32\\eclipse\\plugins\\com.ibm.bluez.jcop.eclipse_3.1.2\\apis\\bio10\\bio10.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "jc221",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "2b8016c393389842492fdcd6f56802b2ed602cbb",
+    "jarFileModificationDate": "2006-10-31T11:38:28+08:00",
+    "location": "D:\\大三下\\RFID\\eclipse-java-juno-SR2-win32\\eclipse\\plugins\\com.ibm.bluez.jcop.eclipse_3.1.2\\apis\\jc221\\jc221.jar",
+    "javaRuntime": false
+  }
+]
