@@ -33,31 +33,30 @@ public class Purse extends Applet {
 		papdu.p1 = buffer[ISO7816.OFFSET_P1];
 		papdu.p2 = buffer[ISO7816.OFFSET_P2];
 		
-		/*
+		
 		//对过程密钥和mac生成结果进行测试
 		if(papdu.ins == (byte)0xAA) {
 			PenCiper pen = new PenCiper();
 			
-			
 			// 计算mac
 			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
-			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
+			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
 			byte[] mac = new byte[4];
 			pen.gen_mac(key, data, (short)8, mac);
 			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
 			apdu.setOutgoingAndSend((short)0, (short)4);
 			
-			
+			/*
 			// 计算过程密钥
-			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
-			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
-			byte[] gen_key = new byte[8];
-			pen.gen_processkey(key, data, (short)0, (short)8, gen_key, (short)0);
-			Util.arrayCopyNonAtomic(gen_key, (short)0, buffer, (short)0, (short)8);
-			apdu.setOutgoingAndSend((short)0, (short)8);
-			
-		}*/
-		
+			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
+			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
+			byte[] mac = new byte[4];
+			pen.gen_mac(key, data, (short)8, mac);
+			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
+			apdu.setOutgoingAndSend((short)0, (short)4);
+			*/
+		}
+		/*
 		
 		if(papdu.APDUContainData()) {
 			papdu.lc = buffer[ISO7816.OFFSET_LC];
@@ -77,7 +76,7 @@ public class Purse extends Applet {
 		if(rc && papdu.le != (byte)0) {
 			Util.arrayCopyNonAtomic(papdu.data, (short)0, buffer, ISO7816.OFFSET_CDATA, (short)papdu.data.length);
 			apdu.setOutgoingAndSend(ISO7816.OFFSET_CDATA, papdu.le);
-		}
+		}*/
 	}
 	
 	private boolean handleEvent() {

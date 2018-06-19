@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javacard.framework.JCSystem"/>
 <fullyQualifiedTypeName name="javacard.framework.Util"/>
 <fullyQualifiedTypeName name="javacard.framework.ISO7816"/>
+<fullyQualifiedTypeName name="javacardx.crypto.Cipher"/>
+<fullyQualifiedTypeName name="javacard.security.Key"/>
+<fullyQualifiedTypeName name="javacard.security.KeyBuilder"/>
+<fullyQualifiedTypeName name="javacard.security.DESKey"/>
+<fullyQualifiedTypeName name="javacard.framework.JCSystem"/>
 </qualifiedTypeNameHistroy>

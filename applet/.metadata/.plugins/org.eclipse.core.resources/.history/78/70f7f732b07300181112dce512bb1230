@@ -33,12 +33,12 @@ public class Purse extends Applet {
 		papdu.p1 = buffer[ISO7816.OFFSET_P1];
 		papdu.p2 = buffer[ISO7816.OFFSET_P2];
 		
-		/*
+		
 		//对过程密钥和mac生成结果进行测试
 		if(papdu.ins == (byte)0xAA) {
 			PenCiper pen = new PenCiper();
 			
-			
+			/*
 			// 计算mac
 			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
 			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
@@ -46,6 +46,7 @@ public class Purse extends Applet {
 			pen.gen_mac(key, data, (short)8, mac);
 			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
 			apdu.setOutgoingAndSend((short)0, (short)4);
+			*/
 			
 			
 			// 计算过程密钥
@@ -55,8 +56,7 @@ public class Purse extends Applet {
 			pen.gen_processkey(key, data, (short)0, (short)8, gen_key, (short)0);
 			Util.arrayCopyNonAtomic(gen_key, (short)0, buffer, (short)0, (short)8);
 			apdu.setOutgoingAndSend((short)0, (short)8);
-			
-		}*/
+		}
 		
 		
 		if(papdu.APDUContainData()) {
