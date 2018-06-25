@@ -4,6 +4,7 @@ import javacard.framework.APDU;
 import javacard.framework.Applet;
 import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
+import javacard.framework.JCSystem;
 import javacard.framework.Util;
 
 public class Purse extends Applet {
@@ -12,6 +13,7 @@ public class Purse extends Applet {
 	public KeyFile key_file = null;
 	public BinaryFile card_file = null;
 	public BinaryFile person_file = null;
+	public EPFile ep_file = null;
 
 	public static void install(byte[] bArray, short bOffset, byte bLength) {
 		// GP-compliant JavaCard applet registration
@@ -33,21 +35,10 @@ public class Purse extends Applet {
 		papdu.p1 = buffer[ISO7816.OFFSET_P1];
 		papdu.p2 = buffer[ISO7816.OFFSET_P2];
 		
-		/*
-		//对过程密钥和mac生成结果进行测试
-		if(papdu.ins == (byte)0xAA) {
-			PenCiper pen = new PenCiper();
-			
-			
-			// 计算mac
-			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
-			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
-			byte[] mac = new byte[4];
-			pen.gen_mac(key, data, (short)8, mac);
-			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
-			apdu.setOutgoingAndSend((short)0, (short)4);
-			
-			
+		
+		//对过程密钥结果进行测试
+		if(papdu.ins == condef.INS_GET_SESPK) {
+			PenCipher pen = new PenCipher();
 			// 计算过程密钥
 			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
 			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
@@ -55,37 +46,50 @@ public class Purse extends Applet {
 			pen.gen_processkey(key, data, (short)0, (short)8, gen_key, (short)0);
 			Util.arrayCopyNonAtomic(gen_key, (short)0, buffer, (short)0, (short)8);
 			apdu.setOutgoingAndSend((short)0, (short)8);
-			
-		}*/
-		
-		
-		if(papdu.APDUContainData()) {
-			papdu.lc = buffer[ISO7816.OFFSET_LC];
-			papdu.data = new byte[lc];
-			Util.arrayCopyNonAtomic(buffer, ISO7816.OFFSET_CDATA, papdu.data, (short)0, lc);
-			if(lc == papdu.lc) {
-				papdu.le = 0;
-			} else {
-				papdu.le = buffer[buffer.length-1];
-			}
-		} else {
-			papdu.le = buffer[ISO7816.OFFSET_LC];
-			papdu.lc = 0;
 		}
-		
-		boolean rc = handleEvent();
-		if(rc && papdu.le != (byte)0) {
-			Util.arrayCopyNonAtomic(papdu.data, (short)0, buffer, ISO7816.OFFSET_CDATA, (short)papdu.data.length);
-			apdu.setOutgoingAndSend(ISO7816.OFFSET_CDATA, papdu.le);
+		//对mac生成结果进行测试
+		else if(papdu.ins == condef.INS_GET_MAC) {
+			PenCipher pen = new PenCipher();
+			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
+			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
+			byte[] mac = new byte[4];
+			pen.gen_mac(key, data, (short)8, mac);
+			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
+			apdu.setOutgoingAndSend((short)0, (short)4);		
+		}
+		else {
+			if(papdu.APDUContainData()) {
+				papdu.lc = buffer[ISO7816.OFFSET_LC];
+				papdu.data = new byte[lc];
+				Util.arrayCopyNonAtomic(buffer, ISO7816.OFFSET_CDATA, papdu.data, (short)0, lc);
+				if(lc == papdu.lc) {
+					papdu.le = 0;
+				} else {
+					papdu.le = buffer[buffer.length-1];
+				}
+			} else {
+				papdu.le = buffer[ISO7816.OFFSET_LC];
+				papdu.lc = 0;
+			}
+			
+			boolean rc = handleEvent();
+			if(rc && papdu.le != (byte)0) {
+				Util.arrayCopyNonAtomic(papdu.data, (short)0, buffer, ISO7816.OFFSET_CDATA, (short)papdu.data.length);
+				apdu.setOutgoingAndSend(ISO7816.OFFSET_CDATA, papdu.le);
+			}
 		}
 	}
 	
 	private boolean handleEvent() {
 		switch(papdu.ins) {
-		case condef.INS_CREATE_FILE: return create_file();
-		case condef.INS_WRITE_BIN: return write_bin();
-		case condef.INS_WRITE_KEY: return write_key();
-		case condef.INS_READ_BIN: return read_bin();
+			case condef.INS_CREATE_FILE: return create_file();
+			case condef.INS_WRITE_BIN: return write_bin();
+			case condef.INS_WRITE_KEY: return write_key();
+			case condef.INS_READ_BIN: return read_bin();
+			case condef.INS_INIT_TRANS: return init_load_purchase(papdu.p1);
+			case condef.INS_LOAD: return load();
+			case condef.INS_PURCHASE: return purchase();
+			case condef.INS_GET_BALANCE: return get_balance();
 		}
 		ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
 		return false;
@@ -171,6 +175,22 @@ public class Purse extends Applet {
 	}
 	
 	private boolean EP_file() {
+		
+		if(papdu.cla != (byte)0x80)
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+		if(papdu.ins != condef.INS_CREATE_FILE)
+			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+		if(papdu.p1 != (byte)0x00 || papdu.p2 != (byte)0x18)
+			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
+		if(papdu.lc != (byte)0x07) {
+			ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		}
+		
+		if(ep_file != null)
+			ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
+		if(key_file == null)
+			ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
+		ep_file = new EPFile(key_file);
 		return true;
 	}
 	
@@ -211,6 +231,137 @@ public class Purse extends Applet {
 			ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
 		}
 		person_file = new BinaryFile(papdu.data);
+		return true;
+	}
+	
+	private boolean init_load_purchase(short load_purchase) {
+		switch(load_purchase) {
+			case (short)0x00: return init_load();
+			case (short)0x01: return init_purchase();
+			default: return false;
+		}
+	}
+	
+	private boolean init_load() {
+		short num, rc;
+		if(papdu.cla != (byte)0x80) 
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+		if(papdu.p1 != (byte)0x00 || papdu.p2 != (byte)0x02) 
+			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
+		if(papdu.lc != (short)0x0B) 
+			ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		if(ep_file == null) 
+			ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
+		
+		num = key_file.findkey(papdu.data[0]);
+		
+		if(num == 0x00) {
+			ISOException.throwIt(ISO7816.SW_RECORD_NOT_FOUND);
+		}
+		
+		//初始化圈存
+		rc = ep_file.init4load(num, papdu.data);
+		
+		if(rc == 2) {
+			ISOException.throwIt(condef.SW_LOAD_FULL);
+		}
+		
+		papdu.le = (short)0x10;
+		return true;
+	}
+	
+	private boolean init_purchase() {
+		short num, rc;
+		
+		if(papdu.cla != (byte)0x80) 
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+		if(papdu.ins != (byte)0x50) 
+			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+		if(papdu.p1 != (byte)0x01 || papdu.p2 != (byte)0x02) 
+			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
+		if(papdu.lc != (short)0x0B) 
+			ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		if(ep_file == null) 
+			ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
+		
+		num = key_file.findkey(papdu.data[0]);
+		
+		if(num == 0) 
+			ISOException.throwIt(ISO7816.SW_RECORD_NOT_FOUND);
+		
+		rc = ep_file.init4purchase(num, papdu.data);
+		
+		if(rc == 2)
+			ISOException.throwIt(condef.SW_BALANCE_NOT_ENOUGH);
+		
+		papdu.le = (short)0x0F;
+		return true;
+	}
+	
+	private boolean load() {
+		short rc;
+		if(papdu.cla != (byte)0x80) 
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+		if(papdu.ins != (byte)0x52) 
+			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+		if(papdu.p1 != (byte)0x00 || papdu.p2 != (byte)0x00) 
+			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
+		if(papdu.lc != (byte)0x0B) 
+			ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		
+		rc = ep_file.load(papdu.data);
+		
+		if(rc == 1)
+			ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
+		else if(rc == 2)
+			ISOException.throwIt(condef.SW_LOAD_FULL);
+		else if(rc == 3)
+			ISOException.throwIt(ISO7816.SW_RECORD_NOT_FOUND);
+		
+		papdu.le = (short)0x04; 
+		return true;
+	}
+	
+	private boolean purchase() {
+		short rc;
+		
+		if(papdu.cla != (byte)0x80) 
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+		if(papdu.ins != (byte)0x54) 
+			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+		if(papdu.p1 != (byte)0x01 || papdu.p2 != (byte)0x00) 
+			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
+		if(papdu.lc != (byte)0x0F) 
+			ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		
+		rc = ep_file.purchase(papdu.data);
+		
+		if(rc == 1)
+			ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
+		else if(rc == 2)
+			ISOException.throwIt(condef.SW_BALANCE_NOT_ENOUGH);
+		else if(rc == 3)
+			ISOException.throwIt(ISO7816.SW_RECORD_NOT_FOUND);
+		
+		papdu.le = (short)0x08;
+		return true;
+	}
+	
+	private boolean get_balance() {
+		short rc;
+		if(papdu.cla != (byte)0x80) 
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+		if(papdu.ins != (byte)0x5C) 
+			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+		if(papdu.p1 != (byte)0x00 || papdu.p2 != (byte)0x02) 
+			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
+		
+		byte[] balance = JCSystem.makeTransientByteArray((short)4, JCSystem.CLEAR_ON_DESELECT);
+		rc = ep_file.get_balance(balance);
+		
+		Util.arrayCopyNonAtomic(balance, (short)0, papdu.data, (short)0, (short)4);
+		
+		papdu.le = (short)0x04;
 		return true;
 	}
 }

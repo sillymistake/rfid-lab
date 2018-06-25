@@ -13,9 +13,10 @@ public class Papdu {
 		switch(ins) {
 		case condef.INS_CREATE_FILE:
 		case condef.INS_LOAD:
-		case condef.INS_NIIT_TRANS:
+		case condef.INS_INIT_TRANS:
 		case condef.INS_WRITE_BIN:
 		case condef.INS_WRITE_KEY:
+		case condef.INS_PURCHASE: //Ìí¼Ó
 			return true;
 		}
 		return false;

@@ -1,5 +1,5 @@
 #package specification
-#Tue Jun 19 19:05:31 CST 2018
+#Mon Jun 25 11:29:03 CST 2018
 Purse-major=1
 masktools-version=1.1
 Purse.Purse-aid=153520410101
@@ -7,4 +7,4 @@ Purse-minor=0
 Purse-base=internal
 jcop-packages=Purse
 Purse-aid=1535204101
-Purse-clazzes=Purse.BinaryFile Purse.condef Purse.KeyFile Purse.Papdu Purse.PenCiper Purse.Purse
+Purse-clazzes=Purse.BinaryFile Purse.condef Purse.EPFile Purse.KeyFile Purse.Papdu Purse.PenCipher Purse.Purse Purse.Randgenerator

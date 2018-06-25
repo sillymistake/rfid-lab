@@ -5,12 +5,12 @@ import javacard.security.Key;
 import javacard.security.KeyBuilder;
 import javacardx.crypto.Cipher;
 
-public class PenCiper {
+public class PenCipher {
 	public Cipher desEngine;
 	public Key deskey;
 	
 	// ¹¹Ôìº¯Êý
-	public PenCiper() {
+	public PenCipher() {
 		desEngine = Cipher.getInstance(Cipher.ALG_DES_ECB_NOPAD, false);
 		deskey = KeyBuilder.buildKey(KeyBuilder.TYPE_DES, KeyBuilder.LENGTH_DES, false);
 	}
