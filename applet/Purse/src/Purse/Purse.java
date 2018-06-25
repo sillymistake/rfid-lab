@@ -60,7 +60,6 @@ public class Purse extends Applet {
 		else {
 			if(papdu.APDUContainData()) {
 				papdu.lc = buffer[ISO7816.OFFSET_LC];
-				papdu.data = new byte[lc];
 				Util.arrayCopyNonAtomic(buffer, ISO7816.OFFSET_CDATA, papdu.data, (short)0, lc);
 				if(lc == papdu.lc) {
 					papdu.le = 0;
