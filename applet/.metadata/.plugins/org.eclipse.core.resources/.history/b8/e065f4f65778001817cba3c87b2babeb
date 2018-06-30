@@ -41,7 +41,7 @@ public class Purse extends Applet {
 			PenCipher pen = new PenCipher();
 			// 计算过程密钥
 			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
-			byte[] data = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
+			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
 			byte[] gen_key = new byte[8];
 			pen.gen_processkey(key, data, (short)0, (short)8, gen_key, (short)0);
 			Util.arrayCopyNonAtomic(gen_key, (short)0, buffer, (short)0, (short)8);
@@ -51,9 +51,9 @@ public class Purse extends Applet {
 		else if(papdu.ins == condef.INS_GET_MAC) {
 			PenCipher pen = new PenCipher();
 			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
-			byte[] data = new byte[]{0x11,0x11,0x11,0x11,0x00,0x00,0x00,0x00};
+			byte[] data = new byte[]{0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
 			byte[] mac = new byte[4];
-			pen.gen_mac(key, data, (short)4, mac);
+			pen.gen_mac(key, data, (short)8, mac);
 			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
 			apdu.setOutgoingAndSend((short)0, (short)4);		
 		}
@@ -111,7 +111,7 @@ public class Purse extends Applet {
 		if(papdu.cla != (byte)0x80) {
 			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
 		}
-		//创建文件为0x00，修改文件为0x01
+		//00表示创建，01表示修改
 		if(papdu.p1 != (byte)0x00 && papdu.p1 != (byte)0x01) {
 			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
 		}
@@ -129,7 +129,6 @@ public class Purse extends Applet {
 		if(papdu.cla != (byte)0x00) {
 			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
 		}
-		//持卡人基本文件为0x17,应用基本文件为0x16
 		if(papdu.p1 != (byte)0x17 && papdu.p1 != (byte)0x16) {
 			ISOException.throwIt(ISO7816.SW_WRONG_P1P2);
 		}

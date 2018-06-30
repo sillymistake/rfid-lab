@@ -51,9 +51,9 @@ public class Purse extends Applet {
 		else if(papdu.ins == condef.INS_GET_MAC) {
 			PenCipher pen = new PenCipher();
 			byte[] key = new byte[]{0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
-			byte[] data = new byte[]{0x11,0x11,0x11,0x11,0x00,0x00,0x00,0x00};
+			byte[] data = new byte[]{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			byte[] mac = new byte[4];
-			pen.gen_mac(key, data, (short)4, mac);
+			pen.gen_mac(key, data, (short)8, mac);
 			Util.arrayCopyNonAtomic(mac, (short)0, buffer, (short)0, (short)4);
 			apdu.setOutgoingAndSend((short)0, (short)4);		
 		}
